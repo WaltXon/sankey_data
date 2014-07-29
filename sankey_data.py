@@ -45,23 +45,31 @@ class SankeyD:
         print "Nodes = {0}".format(self.nodes)
         print "Links = {0}".format(self.links)
 
+    def save(self, filename):
+        self.data = {"nodes": self.nodes, 'links': self.links}
+        with open(filename, 'w') as outfile:
+            json.dump(self.data, outfile, indent=4)
+
+
 
 def test():
     data = SankeyD()
-    data.addNode(0, 'node0')
-    data.addNode(1, 'node1')
-    data.addNode(2, 'node2')
-    data.addNode(3, 'node3')
-    data.addNode(4, 'node4')
-    data.addNode(5, 'node5')
+    data.addNode(0, 'State of Texas')
+    data.addNode(1, 'Davy Crockett')
+    data.addNode(2, 'Jim Bob Moore')
+    data.addNode(3, 'Linda Heartattack')
+    data.addNode(4, 'Alice Answers')
+    data.addNode(5, 'Nathan Nerdowell')
 
-    data.addLink('node0', 'node1', 1.0)
-    data.addLink('node1', 'node2', 1.0)
-    data.addLink('node2', 'node3', 0.5)
-    data.addLink('node2', 'node4', 0.5)
-    data.addLink('node4', 'node5', 0.5)
+    data.addLink('State of Texas', 'Davy Crockett', 1.0)
+    data.addLink('Davy Crockett', 'Jim Bob Moore', 1.0)
+    data.addLink('Jim Bob Moore','Linda Heartattack', 0.5)
+    data.addLink('Jim Bob Moore', 'Alice Answers', 0.5)
+    data.addLink('Alice Answers', 'Nathan Nerdowell', 0.5)
 
     data.toString()
     print ("JSON: {0}".format(data.toJSON()))
+
+    data.save('saveddata.json')
 
 test()
